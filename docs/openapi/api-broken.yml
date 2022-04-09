@@ -1,0 +1,42 @@
+openapi: 3.0.2
+info:
+  title: API Documentation
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+paths:
+  "/some/endpoint":
+    patch:
+      description: "Patch endpoint"
+      operationId: patchDocumentById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SomeRequest'
+      responses:
+        '200':
+          description: 'Success'
+
+components:
+  schemas:
+
+    SomeRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            enumField:
+              $ref: '#/components/schemas/SomeEnum'
+          additionalProperties:
+            type: string
+            
+    SomeEnum:
+      type: string
+      enum:
+        - ENUM_VALUE_A
+        - ENUM_VALUE_B
+        - ENUM_VALUE_C
+            

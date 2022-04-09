@@ -1,0 +1,44 @@
+plugins {
+  id 'java-library'
+  id "org.openapi.generator" version "5.4.0"
+}
+
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+    compileOnly "org.springframework:spring-web:5.2.8.RELEASE"
+    compileOnly "org.springframework:spring-context:5.2.8.RELEASE"
+    compileOnly "javax.validation:validation-api:2.0.1.Final"
+    compileOnly "javax.annotation:javax.annotation-api:1.3.2"
+    compileOnly "io.swagger:swagger-annotations:1.6.2"
+    compileOnly "org.openapitools:jackson-databind-nullable:0.2.1"
+    compileOnly "javax.servlet:javax.servlet-api:3.0.1" 
+    compileOnly "io.swagger.core.v3:swagger-annotations:2.1.13"
+} 
+
+openApiGenerate {
+  generatorName = "spring"
+  inputSpec = "$projectDir/docs/openapi/api-broken.yml"
+  outputDir = "$projectDir/build/generated/openapi"
+  apiPackage = "org.openapi.example.api"
+  modelPackage = "org.openapi.example.model"
+  configOptions = [
+      dateLibrary: "java8",
+      "jdk8-default-interface": "false",
+      skipDefaultInterface: "true",
+      interfaceOnly: "true"
+  ]
+}
+
+sourceSets {
+    generated {
+        java.srcDir "$projectDir/build/generated/openapi/src/main/java"
+    }
+}
+
+clean {
+    delete "$projectDir/build/generated/openapi/src/main/java"
+}
